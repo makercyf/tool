@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="https://www.w3.org/1999/xhtml">
+<title>Remove Line breaks</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" >
+</head>
+<body>
+<div>
+  <textarea id="input" placeholder="Input" style="width:100%; margin:7px 0px 0px 0px" rows="7" wrap="off"></textarea>
+  <button onclick="removelinebreaks()">Remove all line breaks</button>
+  <textarea id="output" style="width:100%; margin:7px 0px 0px 0px" placeholder="Output" name="output" cols="30" rows="3"></textarea>
+  <button onclick="copy()">Copy text</button>
+  <h2 id="status"></h2>
+</div>
+
+<script>
+function removelinebreaks() {
+  var input = document.getElementById("input").value
+
+  var output = input.replace(/\r/g, '');
+  output = output.replace(/\n/g, ' ');
+
+  document.getElementById("output").value = output
+}
+
+function copy() {
+  /* Get the text field */
+  var copyText = document.getElementById("output");
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+   /* Copy the text inside the text field */
+  navigator.clipboard.writeText(copyText.value);
+  
+  document.getElementById("status").innerHTML = "Copied";
+	setTimeout(function(){
+		document.getElementById("status").innerHTML = "";
+	},5000);
+}
+</script>
+
+</body>
+</html>
