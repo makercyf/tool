@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="https://www.w3.org/1999/xhtml">
+<title>Check Text Difference</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" >
+</head>
+<body>
+
+<div>
+  <textarea id="input1" placeholder="Text 1" style="width:100%; margin:7px 0px 0px 0px" rows="7" wrap="off"></textarea>
+  <textarea id="input2" placeholder="Text 2" style="width:100%; margin:7px 0px 0px 0px" rows="7" wrap="off"></textarea>
+  <button onclick="checkdiff()">Check</button>
+  <h2>Result:</h2>
+  <h2 id="output"></h2>
+  
+</div>
+
+<script>
+function checkdiff() {
+  var input1 = document.getElementById("input1").value;
+  var input2 = document.getElementById("input2").value;
+  if (input1 == input2) {
+	var output = "Same";
+  } else {
+	var output = "Not the same";
+  }
+
+  document.getElementById("output").innerHTML = output;
+}
+</script>
+
+</body>
+</html>
