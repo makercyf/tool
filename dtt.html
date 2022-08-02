@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="https://www.w3.org/1999/xhtml">
+<title>Data Transfer Time Calculator</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+</head>
+<body>
+
+<div style="position: absolute; top: 40%; left: 42%">
+	<table>
+		<tr>
+			<td>Data size:</td>
+			<td><input type="text" id="size" size="10" class="infield" oninput="calculate();" /></td>
+			<td>
+				<select id="sizeUnit" onchange="calculate()" class="infield">
+					<option value="1">bits</option>
+					<option value="8">bytes</option>
+					<option value="0">--- Binary ---</option>
+					<option value="8192">KiB</option>
+					<option value="8388608" selected="selected">MiB</option>
+					<option value="8589934592">GiB</option>
+					<option value="0">--- Decimal ---</option>
+					<option value="8000">KB</option>
+					<option value="8e6">MB</option>
+					<option value="8e9">GB</option>
+					<option value="8e12">TB</option>
+					<option value="1000">Kbit</option>
+					<option value="1e6">Mbit</option>
+					<option value="1e9">Gbit</option>
+				</select>
+			</td>
+		</tr>
+
+		<tr>
+			<td>Transfer rate:</td>
+			<td><input type="text" id="rate" size="10" class="infield" oninput="calculate();" /></td>
+			<td>
+				<select id="rateUnit" onchange="calculate()" class="infield">
+					<option value="1">bits/s</option>
+					<option value="8">bytes/s</option>
+					<option value="1000">Kbps</option>
+					<option value="8000">KBps</option>
+					<option value="1e6" selected="selected">Mbps</option>
+					<option value="8e6">MBps</option>
+					<option value="1e9">Gbps</option>
+					<option value="8e9">GBps</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3"><hr></td>
+		</tr>
+		<tr>
+			<td>Transfer time:</td>
+			<td><input type="text" id="time" size="10" class="outfield" readonly="readonly" /></td>
+			<td>
+				<select id="timeUnit" onchange="calculate();" class="outfield">
+					<option value="1">seconds</option>
+					<option value="60" selected="selected">minutes</option>
+					<option value="3600">hours</option>
+					<option value="86400">days</option>
+					<option value="604800">weeks</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<script>
+	function calculate() {
+		var size = document.getElementById("size").value;
+		var sizeUnit = document.getElementById("sizeUnit").value;
+
+		var rate = document.getElementById("rate").value;
+		var rateUnit = document.getElementById("rateUnit").value;
+		
+		var timeUnit = document.getElementById("timeUnit").value;
+		var time = (size * sizeUnit) / (rate * rateUnit);
+		if (timeUnit == 60) {
+			time = time / 60;
+		} else if (timeUnit == 3600) {
+			time = time / 3600;
+		} else if (timeUnit == 86400) {
+			time = time / 86400;
+		} else if (timeUnit == 604800) {
+			time = time / 604800;
+		}
+		
+		document.getElementById("time").value = time;
+	}
+</script>
+
+</body>
+</html>
