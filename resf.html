@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="https://www.w3.org/1999/xhtml">
+<title>Remove Empty Spaces</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" >
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</head>
+<body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<div class="container mt-5">
+	<div class="form-group">
+		<textarea id="input" class="form-control" rows="3" oninput="removeemptyspaces()" placeholder="Input"></textarea>
+	</div>
+	<button type="button" class="btn btn-primary mb-3" onclick="removeemptyspaces()">Remove all empty spaces</button>
+
+	<div class="form-group">
+		<textarea id="output" class="form-control" rows="3" placeholder="Output"></textarea>
+	</div>
+	<button type="button" class="btn btn-primary mb-3" onclick="copy()">Copy text</button>
+	<h2 id="status"></h2>
+</div>
+
+<script>
+	function removeemptyspaces() {
+		var input = document.getElementById("input").value;
+
+		var output = input.replace(/\r/g, "");
+		output = output.replace(/ /g, "");
+
+		document.getElementById("output").value = output;
+	}
+
+	function copy() {
+		var copyText = document.getElementById("output");
+		copyText.select();
+		navigator.clipboard.writeText(copyText.value);
+
+		document.getElementById("status").innerHTML = "Copied";
+		setTimeout(function () {
+			document.getElementById("status").innerHTML = "";
+		}, 5000);
+	}
+</script>
+
+</body>
+</html>

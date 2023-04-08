@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="https://www.w3.org/1999/xhtml">
+<title>Data Transfer Time Calculator</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<div class="container">
+  <div class="row justify-content-center align-items-center" style="height: 100vh;">
+    <div class="col-lg-6">
+      <h1 class="text-center mb-4">Data Transfer Time Calculator</h1>
+      <form>
+        <div class="form-group row">
+          <label for="size" class="col-sm-4 col-form-label">Data size:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="size" oninput="calculate();">
+          </div>
+          <div class="col-sm-4">
+            <select class="form-control" id="sizeUnit" onchange="calculate()">
+				<option value="1">bits</option>
+				<option value="8">bytes</option>
+				<option value="0">--- Binary ---</option>
+				<option value="8192">KiB</option>
+				<option value="8388608" selected="selected">MiB</option>
+				<option value="8589934592">GiB</option>
+				<option value="0">--- Decimal ---</option>
+				<option value="8000">KB</option>
+				<option value="8e6">MB</option>
+				<option value="8e9">GB</option>
+				<option value="8e12">TB</option>
+				<option value="1000">Kbit</option>
+				<option value="1e6">Mbit</option>
+				<option value="1e9">Gbit</option>
+            </select>
+          </div>
+        </div>
+        
+		<div class="form-group row">
+          <label for="rate" class="col-sm-4 col-form-label">Transfer rate:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="rate" oninput="calculate();">
+          </div>
+          <div class="col-sm-4">
+            <select class="form-control" id="rateUnit" onchange="calculate()">
+              <option value="1">bits/s</option>
+					<option value="8">bytes/s</option>
+					<option value="1000">Kbps</option>
+					<option value="8000">KBps</option>
+					<option value="1e6" selected="selected">Mbps</option>
+					<option value="8e6">MBps</option>
+					<option value="1e9">Gbps</option>
+					<option value="8e9">GBps</option>
+            </select>
+          </div>
+        </div>
+        
+		<hr>
+        <div class="form-group row">
+          <label for="time" class="col-sm-4 col-form-label">Transfer time:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="time" readonly>
+          </div>
+          <div class="col-sm-4">
+            <select class="form-control" id="timeUnit" onchange="calculate();">
+              <option value="1">seconds</option>
+					<option value="60" selected="selected">minutes</option>
+					<option value="3600">hours</option>
+					<option value="86400">days</option>
+					<option value="604800">weeks</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function calculate() {
+		var size = document.getElementById("size").value;
+		var sizeUnit = document.getElementById("sizeUnit").value;
+
+		var rate = document.getElementById("rate").value;
+		var rateUnit = document.getElementById("rateUnit").value;
+		
+		var timeUnit = document.getElementById("timeUnit").value;
+		var time = (size * sizeUnit) / (rate * rateUnit);
+		if (timeUnit == 60) {
+			time = time / 60;
+		} else if (timeUnit == 3600) {
+			time = time / 3600;
+		} else if (timeUnit == 86400) {
+			time = time / 86400;
+		} else if (timeUnit == 604800) {
+			time = time / 604800;
+		}
+		
+		document.getElementById("time").value = time;
+	}
+</script>
+
+</body>
+</html>
