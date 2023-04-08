@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<title>Text Case Converter</title>
+<head>
+<meta charset="utf-8">
+<style>
+	body {
+		font-family: Arial, sans-serif;
+		max-width: 600px;
+		margin: 0 auto;
+		padding: 20px;
+	}
+	textarea {
+		width: 100%;
+		padding: 10px;
+		font-size: 16px;
+		margin-bottom: 20px;
+		resize: vertical;
+		min-height: 150px;
+	}
+	button {
+		background-color: #28A745;
+		color: white;
+		padding: 10px 20px;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+	button:hover {
+		background-color: #218838;
+	}
+	#copy-button {
+		background-color: #007BFF;
+		float: right;
+	}
+	#copy-button:hover {
+		background-color: #0069D9;
+	}
+</style>
+</head>
+<body>
+	<h1>Text Case Converter</h1>
+	<textarea id="text" placeholder="Enter your text here"></textarea>
+
+	<button onclick="convertToSentenceCase()">Sentence Case</button>
+	<button onclick="convertToLowercase()">Lowercase</button>
+	<button onclick="convertToUppercase()">Uppercase</button>
+	<button onclick="convertToCapitalizedCase()">Capitalized Case</button>
+	<button id="copy-button" onclick="copy()">Copy</button>
+	<h2 style="text-align:center" id="status"></h2>
+
+	<script>
+		function convertToSentenceCase() {
+			var inputText = document.getElementById("text");
+			var outputText = inputText.value.toLowerCase();
+			outputText = outputText.charAt(0).toUpperCase() + outputText.slice(1);
+			outputText = outputText.replace(/[.?!]\s[a-z]/g, function (match) {
+				return match.toUpperCase();
+			});
+			inputText.value = outputText;
+		}
+		function convertToLowercase() {
+			var inputText = document.getElementById("text");
+			var outputText = inputText.value.toLowerCase();
+			inputText.value = outputText;
+		}
+		function convertToUppercase() {
+			var inputText = document.getElementById("text");
+			var outputText = inputText.value.toUpperCase();
+			inputText.value = outputText;
+		}
+		function convertToCapitalizedCase() {
+			var inputText = document.getElementById("text");
+			var outputText = inputText.value.toLowerCase();
+			outputText = outputText.replace(/(^|\s)[a-z]/g, function (match) {
+				return match.toUpperCase();
+			});
+			inputText.value = outputText;
+		}
+		function copy() {
+			var inputText = document.getElementById("text");
+			inputText.select();
+			navigator.clipboard.writeText(inputText.value);
+			document.getElementById("status").innerHTML = "Copied";
+			setTimeout(function () {
+				document.getElementById("status").innerHTML = "";
+			}, 5000);
+		}
+	</script>
+
+</body>
+</html>
