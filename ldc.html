@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hong Kong ID Last Digit Check</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    ></script>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Hong Kong ID Last Digit Check</h1>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form>
+            <div class="form-group">
+              <label for="id-input">Enter first 7 digits of Hong Kong ID:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="id-input"
+                placeholder="e.g. A123456"
+              />
+            </div>
+            <button type="button" class="btn btn-primary" id="check-btn">
+              Check
+            </button>
+          </form>
+          <div class="mt-3" id="result-div"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $("#check-btn").click(function () {
+        var inputStr = $("#id-input").val().toUpperCase();
+        var letter = inputStr.charAt(0);
+        var digits = inputStr.substring(1);
+        if (!/^[A-Z][0-9]{6}$/.test(inputStr)) {
+          $("#result-div").html(
+            '<div class="alert alert-danger" role="alert">Invalid input! Please enter an alphabet followed by 6 digits.</div>'
+          );
+          return;
+        }
+        var num = letter.charCodeAt(0) - 64;
+        var factors = [8, 7, 6, 5, 4, 3, 2];
+        var sum = num * factors[0];
+        for (var i = 0; i < digits.length; i++) {
+          sum += digits.charAt(i) * factors[i + 1];
+        }
+        var remainder = sum % 11;
+        var checkDigit = 11 - remainder;
+        if (checkDigit == 10) {
+          checkDigit = "A";
+        } else if (checkDigit == 11) {
+          checkDigit = 0;
+        }
+        $("#result-div").html(
+          '<div class="alert alert-success" role="alert">The 8th digit of the ID is: ' +
+            checkDigit +
+            "</div>"
+        );
+      });
+    </script>
+  </body>
+</html>
