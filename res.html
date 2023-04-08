@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="https://www.w3.org/1999/xhtml">
+<title>Remove Empty Spaces</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" >
+</head>
+<body>
+
+<div>
+	<textarea id="input" oninput="removeemptyspaces()" placeholder="Input" style="width: 100%; margin: 7px 0px 0px 0px;" cols="30" rows="7"></textarea>
+	<button onclick="removeemptyspaces()">Remove all empty spaces</button>
+	<textarea id="output" style="width: 100%; margin: 7px 0px 0px 0px;" placeholder="Output" name="output" cols="30" rows="3"></textarea>
+	<button onclick="copy()">Copy text</button>
+	<h2 id="status"></h2>
+</div>
+
+<script>
+	function removeemptyspaces() {
+		var input = document.getElementById("input").value;
+
+		var output = input.replace(/\r/g, "");
+		output = output.replace(/ /g, "");
+
+		document.getElementById("output").value = output;
+	}
+
+	function copy() {
+		var copyText = document.getElementById("output");
+		copyText.select();
+		navigator.clipboard.writeText(copyText.value);
+
+		document.getElementById("status").innerHTML = "Copied";
+		setTimeout(function () {
+			document.getElementById("status").innerHTML = "";
+		}, 5000);
+	}
+</script>
+
+</body>
+</html>
