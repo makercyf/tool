@@ -26,3 +26,6 @@ A series of tools that make life easier. The website WILL NOT STORE anything fro
 
 ## Hong Kong ID Last Digit Check
 [CLICK ME](https://makercyf.github.io/tool/ldc.html)
+
+## Word Counter
+[CLICK ME](https://makercyf.github.io/tool/wc.html)

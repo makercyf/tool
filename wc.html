@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Word Counter</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body onload="countWords()">
+
+<div class="container mt-5">
+	<h1 class="text-center mb-3">Word Counter</h1>
+	<h4 class="text-center mb-3" id="result">Number of words: 0</h4>
+	<div class="form-group">
+		<textarea class="form-control" id="inputText" oninput="countWords()" rows="15"></textarea>
+	</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+	function countWords() {
+		var inputText = document.getElementById("inputText").value;
+		var trimmedInputText = inputText.trim();
+		var words = trimmedInputText === "" ? [] : trimmedInputText.split(/\s+/);
+		var numWords = words.length;
+		var output = numWords === 0 ? "Number of words: 0" : "Number of words: " + numWords;
+		document.getElementById("result").innerHTML = output;
+	}
+</script>
+
+</body>
+</html>
