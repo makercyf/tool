@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Binary/Decimal/Hexadecimal Converter</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+    <body>
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h1 class="text-center mb-5">Binary/Decimal/Hexadecimal Converter</h1>
+                    <form>
+                        <div class="form-group mb-3 fs-5">
+                            <label for="bin">Binary</label>
+                            <textarea class="form-control" id="bin" oninput="binto()" rows="3"></textarea>
+                        </div>
+                        <div class="form-group mb-3 fs-5">
+                            <label for="binr">Binary (readable)</label>
+                            <textarea class="form-control" id="binr" rows="3" readonly></textarea>
+                        </div>
+                        <div class="form-group mb-3 fs-5">
+                            <label for="dec">Decimal</label>
+                            <textarea class="form-control" id="dec" oninput="decto()" rows="3"></textarea>
+                        </div>
+                        <div class="form-group mb-3 fs-5">
+                            <label for="hex">Hexadecimal</label>
+                            <textarea class="form-control" id="hex" oninput="hexto()" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+        <script>
+            function binto() {
+                var binValue = bin.value;
+                if (binValue != "") {
+                    if (binValue.startsWith("0b")) {
+                        binValue = binValue.substring(2);
+                    }
+
+                    for (var i = 0; i < binValue.length; i++) {
+                        if (binValue[i] != "0" && binValue[i] != "1") {
+                            bin.style.backgroundColor = "#FFF0F0";
+                            binr.style.backgroundColor = "";
+                            hex.style.backgroundColor = "";
+                            dec.style.backgroundColor = "";
+                            binr.value = "";
+                            hex.value = "";
+                            dec.value = "";
+                            return;
+                        }
+                    }
+
+                    var newhex = parseInt(binValue, 2).toString(16).toUpperCase();
+                    var newdec = parseInt(binValue, 2).toString(10);
+                    var newbinr = binValue.match(/.{1,4}/g).join(" ");
+
+                    if (isNaN(newdec)) {
+                        bin.style.backgroundColor = "#FFF0F0";
+                        binr.style.backgroundColor = "";
+                        hex.style.backgroundColor = "";
+                        dec.style.backgroundColor = "";
+                        binr.value = "";
+                        hex.value = "";
+                        dec.value = "";
+                    } else {
+                        bin.style.backgroundColor = "";
+                        binr.style.backgroundColor = "";
+                        hex.style.backgroundColor = "";
+                        dec.style.backgroundColor = "";
+                        binr.value = newbinr;
+                        hex.value = newhex;
+                        dec.value = newdec;
+                    }
+                } else {
+                    hex.value = "";
+                    dec.value = "";
+                    bin.style.backgroundColor = "";
+                }
+            }
+
+            function decto() {
+                var decValue = dec.value;
+                if (decValue != "") {
+                    if (decValue.startsWith("0d")) {
+                        decValue = decValue.substring(2);
+                    }
+
+                    for (var i = 0; i < decValue.length; i++) {
+                        charCode = decValue.charCodeAt(i);
+                        if (charCode < 48 || charCode > 57) {
+                            dec.style.backgroundColor = "#FFF0F0";
+                            hex.style.backgroundColor = "";
+                            bin.style.backgroundColor = "";
+                            bin.value = "";
+                            binr.value = "";
+                            hex.value = "";
+                            return;
+                        }
+                    }
+
+                    var newbin = parseInt(decValue, 10).toString(2).padStart(decValue.length * 4, "0");
+                    var newbinr = newbin.match(/.{1,4}/g).join(" ");
+                    var newhex = parseInt(decValue, 10).toString(16).toUpperCase();
+
+                    if (isNaN(newbin)) {
+                        dec.style.backgroundColor = "#FFF0F0";
+                        hex.style.backgroundColor = "";
+                        bin.style.backgroundColor = "";
+                        bin.value = "";
+                        binr.value = "";
+                        hex.value = "";
+                    } else {
+                        dec.style.backgroundColor = "";
+                        hex.style.backgroundColor = "";
+                        bin.style.backgroundColor = "";
+                        bin.value = newbin;
+                        binr.value = newbinr;
+                        hex.value = newhex;
+                    }
+                } else {
+                    bin.value = "";
+                    binr.value = "";
+                    hex.value = "";
+                    dec.style.backgroundColor = "";
+                }
+            }
+
+            function hexto() {
+                var hexValue = hex.value;
+                if (hexValue != "") {
+                    if (hexValue.startsWith("0x")) {
+                        hexValue = hexValue.substring(2);
+                    }
+
+                    for (let i = 0; i < hexValue.length; i++) {
+                        charCode = hexValue.charCodeAt(i);
+                        if ((charCode < 48 || charCode > 57) &&
+                            (charCode < 65 || charCode > 70) &&
+                            (charCode < 97 || charCode > 102)) {
+                            hex.style.backgroundColor = "#FFF0F0";
+                            bin.style.backgroundColor = "";
+                            dec.style.backgroundColor = "";
+                            bin.value = "";
+                            binr.value = "";
+                            dec.value = "";
+                            return;
+                        }
+                    }
+
+                    var newbin = parseInt(hexValue, 16).toString(2).padStart(hexValue.length * 4, "0");
+                    var newbinr = newbin.match(/.{1,4}/g).join(" ");
+                    var newdec = parseInt(hexValue, 16).toString(10);
+
+                    if (isNaN(newdec)) {
+                        hex.style.backgroundColor = "#FFF0F0";
+                        bin.style.backgroundColor = "";
+                        dec.style.backgroundColor = "";
+                        bin.value = "";
+                        binr.value = "";
+                        dec.value = "";
+                    } else {
+                        hex.style.backgroundColor = "";
+                        bin.style.backgroundColor = "";
+                        dec.style.backgroundColor = "";
+                        bin.value = newbin;
+                        binr.value = newbinr;
+                        dec.value = newdec;
+                    }
+                } else {
+                    hex.style.backgroundColor = "";
+                    bin.value = "";
+                    binr.value = "";
+                    dec.value = "";
+                }
+            }
+        </script>
+    </body>
+</html>
