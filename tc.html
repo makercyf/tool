@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<title>Timestamp Converter</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+<div class="container mt-5">
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="text-center">Timestamp Converter</h1>
+		</div>
+	</div>
+	<div class="row mt-4">
+		<div class="col-md-12 text-center">
+			<input type="text" id="timestamp_input" class="form-control form-control-lg" placeholder="Enter a time or Unix timestamp to convert">
+			<button class="btn btn-primary btn-block mt-3" onclick="GetTimestamp()">Convert</button>
+		</div>
+	</div>
+	<div class="row mt-4">
+		<div class="col-md-12" id="error_message" style="display: none;">
+			<div class="alert alert-danger" role="alert">
+				<h4 class="alert-heading">Error</h4>
+				<p>Error, this date and time or Unix timestamp is not formatted in a way that can be converted.</p>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-4">
+		<div class="col-md-12" id="timestamp_output" style="display: none;">
+			<div class="card">
+				<div class="card-body">
+					<h4 class="card-title">Converted Values</h4>
+					<table class="table">
+						<tr>
+							<td><strong>Unix Timestamp</strong></td>
+							<td id="moment_timestamp_output"></td>
+						</tr>
+						<tr>
+							<td><strong>Local Date and Time</strong></td>
+							<td id="moment_time_local_output"></td>
+						</tr>
+						<tr>
+							<td><strong>UTC Date and Time</strong></td>
+							<td id="moment_time_utc_output"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-4">
+		<div class="col-md-4">
+			<div class="card text-center mb-4">
+				<div class="card-header">
+					<h4>Current Unix Timestamp</h4>
+				</div>
+				<div class="card-body">
+					<h4 class="current_timestamp"></h4>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card text-center mb-4">
+				<div class="card-header">
+					<h4>Current Local Time</h4>
+				</div>
+				<div class="card-body">
+					<h4 id="current_time_local"></h4>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card text-center mb-4">
+				<div class="card-header">
+					<h4>Current UTC Time</h4>
+				</div>
+				<div class="card-body">
+					<h4 id="current_time_utc"></h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	var $currenttimestamp, $currenttime;
+	$(document).ready(function () {
+		$currenttimestamp = $(".current_timestamp");
+		$currenttimeutc = $("#current_time_utc");
+		$currenttimelocal = $("#current_time_local");
+		UpdateCurrentUnixTimestamp();
+		$("#timestamp_input").keyup(function (event) {
+			if (event.keyCode == 13) {
+				GetTimestamp();
+			}
+		});
+	});
+	function UpdateCurrentUnixTimestamp() {
+		$currenttimestamp.html(moment().utc().format("X"));
+		$currenttimelocal.html(moment().format("MMMM D, YYYY h:mm:ss a"));
+		$currenttimeutc.html(moment().utc().format("MMMM D, YYYY h:mm:ss a"));
+		setTimeout(function () {
+			UpdateCurrentUnixTimestamp();
+		}, 500);
+	}
+	function GetTimestamp() {
+		var input = $("#timestamp_input").val();
+		if (input != "") {
+			if ((moment(input).isValid() || !isNaN(input)) && input.length) {
+				if (isNaN(input)) {
+					var moment_timestamp = moment(input).format("X");
+					var moment_time_local = moment(input).format("MMMM D, YYYY @ h:mm:ss a");
+					var moment_time_utc = moment(input).utc().format("MMMM D, YYYY @ h:mm:ss a");
+				} else {
+					var moment_timestamp = input;
+					var moment_time_local = moment(input * 1000).format("MMMM D, YYYY @ h:mm:ss a");
+					var moment_time_utc = moment(input * 1000)
+						.utc()
+						.format("MMMM D, YYYY @ h:mm:ss a");
+				}
+				$("#moment_timestamp_output").html(moment_timestamp);
+				$("#moment_time_local_output").html(moment_time_local);
+				$("#moment_time_utc_output").html(moment_time_utc);
+				$("#error_message").hide();
+				$("#input_examples").hide();
+				$("#timestamp_output").show();
+			} else {
+				$("#timestamp_output").hide();
+				$("#error_message").show();
+				$("#input_examples").show();
+			}
+		}
+	}
+</script>
+
+</body>
+</html>
