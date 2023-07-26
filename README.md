@@ -29,3 +29,9 @@ A series of tools that make life easier. The website WILL NOT STORE anything fro
 
 ## Word Counter
 [CLICK ME](https://makercyf.github.io/tool/wc.html)
+
+## Timestamp Converter
+[CLICK ME](https://makercyf.github.io/tool/tc.html)
+
+## Binary/Decimal/Hexadecimal Converter
+[CLICK ME](https://makercyf.github.io/tool/bdhc.html)
