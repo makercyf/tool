@@ -38,3 +38,6 @@ A series of tools that make life easier. The website WILL NOT STORE anything fro
 
 ## Color Comparison
 [CLICK ME](https://makercyf.github.io/tool/cc.html)
+
+## Image OCR
+[CLICK ME](https://makercyf.github.io/tool/ocr.html)
