@@ -35,3 +35,6 @@ A series of tools that make life easier. The website WILL NOT STORE anything fro
 
 ## Binary/Decimal/Hexadecimal Converter
 [CLICK ME](https://makercyf.github.io/tool/bdhc.html)
+
+## Color Comparison
+[CLICK ME](https://makercyf.github.io/tool/cc.html)
