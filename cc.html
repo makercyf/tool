@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Color Comparison</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+
+<style>
+	#square-comparison {
+		display: inline-block;
+		height: 500px;
+		width: 500px;
+		position: relative;
+		margin: auto;
+	}
+	.small-square {
+		position: absolute;
+		width: 33.33%;
+		height: 33.33%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 12px; /* Adjust font size */
+		color: white; /* Adjust text color */
+	}
+	.center-button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.triangle-text {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		color: white; /* Adjust text color */
+		font-size: 24px; /* Adjust font size */
+	}
+</style>
+
+<script>
+	let rotationDegree = 0;
+
+	function addHash(color) {
+		if (color.charAt(0) !== '#') {
+			color = '#' + color;
+		}
+		return color;
+	}
+
+	function showColors() {
+		let color1 = document.getElementById("color1").value;
+		let color2 = document.getElementById("color2").value;
+		color1 = addHash(color1);
+		color2 = addHash(color2);
+
+		const squareComparison = document.getElementById("square-comparison");
+		squareComparison.innerHTML = `
+			<div style="background: linear-gradient(${rotationDegree}deg, ${color1}, ${color1} 50%, ${color2} 50%, ${color2}); height: 100%; width: 100%">
+				<div class="small-square" style="top: 0; left: 0; font-size: 24px; font-family: Arial;">Test</div>
+				<div class="small-square" style="top: 0; left: 33.33%; font-size: 24px;">Test</div>
+				<div class="small-square" style="top: 0; left: 66.66%; font-size: 24px;">Test</div>
+				<div class="small-square" style="top: 33.33%; left: 0; font-size: 24px;">Test</div>
+				<div class="small-square" style="top: 33.33%; left: 33.33%; font-size: 24px;">Test</div>
+				<div class="small-square" style="top: 33.33%; left: 66.66%; font-size: 24px;">Test</div>
+				<div class="small-square" style="top: 66.66%; left: 0; font-size: 24px;">Test</div>
+				<div class="small-square" style="top: 66.66%; left: 33.33%; font-size: 24px;">Test</div>
+				<div class="small-square" style="top: 66.66%; left: 66.66%; font-size: 24px;">Test</div>
+			</div>`;
+	}
+
+	// Function to handle right arrow key press
+	function handleKeyPress(event) {
+		if (event.key === "ArrowRight") {
+			rotationDegree += 45;
+			showColors();
+		}
+		if (event.key === "ArrowLeft") {
+			rotationDegree -= 45;
+			showColors();
+		}
+	}
+
+	// Add event listener to the document for key press
+	document.addEventListener("keydown", handleKeyPress);
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
+</head>
+<body class="container mt-4">
+
+<div class="row">
+	<div class="col-md-6">
+		<input type="text" class="form-control" id="color1" placeholder="Color 1 Hex" oninput="showColors()">
+	</div>
+	<div class="col-md-6">
+		<input type="text" class="form-control" id="color2" placeholder="Color 2 Hex" oninput="showColors()">
+	</div>
+	<div class="col-md-12 mt-4 center-button">
+		<button class="btn btn-primary" onclick="showColors()">Show Colors</button>
+	</div>
+</div>
+
+<div class="row mt-4">
+	<div id="square-comparison"></div>
+</div>
+
+</body>
+</html>
